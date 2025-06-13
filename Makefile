@@ -11,3 +11,22 @@ help:
 start: ## Starts project in development mode
 	@pnpm install
 	@pnpm run dev
+
+## —— Tests ————————————————————————————————————————————————————————————————
+lint: ## Run linter
+	@pnpm run lint
+
+format: ## Format code
+	@pnpm run format
+
+type: ## Run type checks
+	@pnpm run type-check
+
+test: ## Run tests
+	@pnpm run test
+
+ci: ## Run CI checks
+	@make lint
+	@make format
+	@make type
+	@make test:unit
