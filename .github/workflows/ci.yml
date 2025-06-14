@@ -15,7 +15,7 @@ jobs:
         steps:
             -   name: Checkout code
                 uses: actions/checkout@v4
-            
+
             -   name: Install pnpm
                 uses: pnpm/action-setup@v4
                 with:
@@ -41,24 +41,25 @@ jobs:
             
             -   name: Build Library
                 run: pnpm run build
+                
+            -   name: Upload artifact for GitHub Pages
+                uses: actions/upload-pages-artifact@v3
+                with:
+                    path: 'dist'
 
     deploy:
         needs: build
         runs-on: ubuntu-latest
-
         permissions:
-            contents: read
             pages: write
             id-token: write
-
         concurrency:
             group: 'pages'
             cancel-in-progress: true
-
         environment:
             name: github-pages
             url: ${{ steps.deployment.outputs.page_url }}
-
         steps:
             -   name: Deploy to GitHub Pages
+                id: deployment
                 uses: actions/deploy-pages@v4
